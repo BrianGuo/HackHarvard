@@ -39,3 +39,9 @@ def new_times(request):
         fullprof = FullProfile(profile=profile, free_time=form)
         return redirect(reverse('groups', kwargs={'profile': form}))
     return render(request, 'new_times.html', {'form': form})
+
+
+def view_profile(request):
+    profile = Profile.objects.get(user=get_user_model().objects.get(id=request.user.id))
+    return render(request, 'profile.html', {'profile': profile})
+
