@@ -2,11 +2,12 @@ from django.db import models
 
 # Create your models here.
 class Course(models.Model):
-
+	department = models.CharField(max_length=30)
+	number = models.CharField(max_length=4)
+	title = models.CharField(max_length=30)
 
 class FreeTime(models.Model):
-
-
+	time = models.DateTimeField()
 
 class Profile(models.Model):
 	
