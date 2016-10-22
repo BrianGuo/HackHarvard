@@ -9,6 +9,10 @@ class Course(models.Model):
     title = models.CharField(max_length=30)
 
 
+	def __str__(self):
+		return self.department + " " + self.number
+
+
 class FreeTime(models.Model):
     time_start = models.DateTimeField()
     time_end = models.DateTimeField()
