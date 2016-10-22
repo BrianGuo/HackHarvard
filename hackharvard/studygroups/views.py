@@ -77,3 +77,7 @@ def groups(request):
 def view_profile(request):
     profile = Profile.objects.get(user=get_user_model().objects.get(id=request.user.id))
     return render(request, 'profile.html', {'profile': profile})
+
+def create_group(request):
+    if request.method == "POST":
+        Group_current = Group()

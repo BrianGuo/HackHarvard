@@ -22,3 +22,6 @@ class DateDurationForm(forms.ModelForm):
     class Meta:
         model = DateDuration
         fields = []
+
+class GroupForm(forms.ModelForm):
+
