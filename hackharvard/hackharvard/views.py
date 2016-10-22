@@ -8,5 +8,5 @@ from django.conf import settings
 
 def home(request):
     today = datetime.date.today()
-    return render(request, 'index.html',
+    return render(request, 'homepage.html',
                   {'today': today, 'now': now()})
