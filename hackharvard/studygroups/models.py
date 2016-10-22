@@ -9,14 +9,8 @@ class Course(models.Model):
     number = models.CharField(max_length=4)
     title = models.CharField(max_length=30)
 
-
     def __str__(self):
         return self.department + " " + self.number
-
-
-class FreeTime(models.Model):
-    time_start = models.DateTimeField()
-    time_end = models.DateTimeField()
 
 
 class Profile(models.Model):
@@ -30,10 +24,22 @@ class Profile(models.Model):
 
     bio = models.TextField()
 
-class FullProfile(models.Model):
 
-    profile = models.OneToOneField(Profile)
-    free_time = models.ManyToManyField(FreeTime)
+class DateDuration(models.Model):
 
+    profile = models.ForeignKey(Profile)
 
+    DATE_CHOICES = (
+        ('M', "Monday"),
+        ('T', "Tuesday"),
+        ('W', "Wednesday"),
+        ('R', "Thursday"),
+        ('F', "Friday"),
+        ('S', "Saturday"),
+        ('U', "Sunday")
+    )
+    date = models.CharField(max_length=1, choices=DATE_CHOICES)
+    time_start = models.TimeField()
+    time_end = models.TimeField()
 
+    in_proposed_group = models.BooleanField()
