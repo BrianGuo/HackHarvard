@@ -4,15 +4,32 @@
 
     #signin_div{
         text-align: center;
+        border-right-style: solid;
+        border-right-width: 3px;
+        height: 450px;
+        padding: 20% 0;
+    }
+
+    .already{
+        font-family: "Trebuchet MS";
+        font-size: x-large
+    }
+
+    #signup_div{
+        text-align: center;
+        height: 450px;
+        padding: 20% 0;
     }
     </style>
-    <div class="container">
+    <div class="container" style="margin-bottom: 50px;">
         <div class="row">
             <div class="col-md-6" id="signin_div">
-            Already Have an Account?
-            <button value="Sign In"></button>
+            <p class="already">Already Have an Account?</p><br>
+            <a href="/accounts/login"><button type="button" class="btn btn-primary btn-lg"> Sign In </button></a>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" id="signup_div">
+            <p class="already"> Need to Register?</p><br>
+            <a href="/accounts/login"><button type="button" class="btn btn-primary btn-lg"> Register </button></a>
             </div>
         </div>
     </div>
