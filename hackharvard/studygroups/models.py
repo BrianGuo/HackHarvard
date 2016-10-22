@@ -43,6 +43,10 @@ class DateDuration(models.Model):
 
     in_proposed_group = models.BooleanField()
 
+
 class Group(models.Model):
     course = models.ForeignKey(Course)
     members = models.ManyToManyField(Profile)
+
+    meeting_time = models.OneToOneField(DateDuration)
+    location = models.CharField(max_length=50)
