@@ -21,5 +21,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', home, name="home"),
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^', include('studygroups.urls', namespace='studygroups'))
+    url(r'^studygroups/', include('studygroups.urls', namespace='studygroups')),
 ]

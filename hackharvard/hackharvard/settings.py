@@ -113,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_REDIRECT_URL = '/new_profile/'
+LOGIN_REDIRECT_URL = '/studygroups/new_profile/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
@@ -137,3 +137,5 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
 )
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
