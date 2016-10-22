@@ -8,30 +8,30 @@
 </ul> -->
 
 <div class="match-list">
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Course</th>
-				<th>Members</th>
-				<th>Meeting Time</th>
-				<th>Location</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for group in groups %}
-				<tr>
-					<td>{{group.course.department}} {{group.course.number}}</td>
-					<td>
-						{% for member in group.members %}
-							{{ member.first_name }} {{ member.last_name }},
-						{% endfor %}
-					</td>
-					<td>{{group.meeting_time}}</td>
-					<td>{{group.location}}</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Members</th>
+                <th>Meeting Time</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for group in groups %}
+                <tr>
+                    <td>{{group.course.department}} {{group.course.number}}</td>
+                    <td>
+                        {% for member in group.members %}
+                            {{ member.first_name }} {{ member.last_name }},
+                        {% endfor %}
+                    </td>
+                    <td>{{group.meeting_time}}</td>
+                    <td>{{group.location}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 <form action="/studygroups/create_group" method="post">
