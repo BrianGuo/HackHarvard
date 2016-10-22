@@ -26,7 +26,6 @@ class Profile(models.Model):
 
 
 class DateDuration(models.Model):
-
     profile = models.ForeignKey(Profile)
 
     DATE_CHOICES = (
@@ -43,3 +42,7 @@ class DateDuration(models.Model):
     time_end = models.TimeField()
 
     in_proposed_group = models.BooleanField()
+
+class Group(models.Model):
+    course = models.ForeignKey(Course)
+    members = models.ManyToManyField(Profile)
