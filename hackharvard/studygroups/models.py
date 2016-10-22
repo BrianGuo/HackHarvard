@@ -35,5 +35,6 @@ class FullProfile(models.Model):
     profile = models.OneToOneField(Profile)
     free_time = models.ManyToManyField(FreeTime)
 
-
-
+class Group(models.Model):
+    course = models.ForeignKey(Course)
+    members = models.ManyToManyField(Profile)
