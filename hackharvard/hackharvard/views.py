@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import render
 from django.utils.timezone import now
 from django.dispatch import receiver
@@ -5,4 +7,6 @@ from django.conf import settings
 
 
 def home(request):
-    return render(request, 'home.html')
+    today = datetime.date.today()
+    return render(request, 'index.html',
+                  {'today': today, 'now': now()})
