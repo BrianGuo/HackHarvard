@@ -1,9 +1,12 @@
 from django import forms
 from django.forms import ModelForm
 
-from .models import Profile
+from .models import Profile, Course
+
 
 class ProfileForm(ModelForm):
-	class Meta:
-		model = Profile
-		fields = ['first_name', 'last_name', 'courses', 'free_time', 'resume_or_linkedin', 'bio'] 
+
+    courses = forms.ModelMultipleChoiceField(queryset=Course.objects.all())
+    class Meta:
+        model = Profile
+        fields = ['first_name', 'last_name', 'resume_or_linkedin', 'bio']
