@@ -21,6 +21,7 @@
             float: right;
             display: inline;
             color: #ffffff;
+            padding-left: 20px;
             /* text-shadow: 2px 2px 4px #000; */
         }
 
@@ -40,6 +41,10 @@
         #logout-link{
             color: #FFFFFF;
         }
+
+        #groups-link{
+            color: #FFFFFF;
+        }
     </style>
 
     </head>
@@ -48,7 +53,7 @@
     <div id="headerImage">
     </div>
     <ul class="menu">
-        {% if request.user %}
+        {% if user %}
         <li><a href="/studygroups/groups/" id='groups-link'>Groups</a></li>
         <li><a href="/studygroups/profile/" id='profile-link'>Profile</a></li>
         <li><a href="/accounts/logout" id="logout-link">Logout</a></li>

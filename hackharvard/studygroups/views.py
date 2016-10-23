@@ -99,6 +99,9 @@ def edit_times(request):
 
 def groups(request):
     user = request.user
+    if (not user.is_authenticated()):
+        messages.error(request, "You are not logged in")
+        return redirect(reverse('home'))
     profile = Profile.objects.get(user=user)
     queryset = profile.dateduration_set.all()
     results = []
@@ -117,6 +120,10 @@ def groups(request):
 
 
 def view_profile(request):
+    user = request.user
+    if (not user.is_authenticated()):
+        messages.error(request, "You are not logged in")
+        return redirect(reverse('home'))
     profile = Profile.objects.get(user=get_user_model().objects.get(id=request.user.id))
     return render(request, 'profile.html', {'profile': profile})
 
