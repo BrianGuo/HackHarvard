@@ -41,12 +41,25 @@ class DateDuration(models.Model):
     time_start = models.TimeField()
     time_end = models.TimeField()
 
-    in_proposed_group = models.BooleanField()
-
 
 class Group(models.Model):
     course = models.ForeignKey(Course)
     members = models.ManyToManyField(Profile)
-
-    meeting_time = models.OneToOneField(DateDuration)
     location = models.CharField(max_length=50)
+
+
+class DateDurationGroup(models.Model):
+    group = models.OneToOneField(Group)
+
+    DATE_CHOICES = (
+        ('M', "Monday"),
+        ('T', "Tuesday"),
+        ('W', "Wednesday"),
+        ('R', "Thursday"),
+        ('F', "Friday"),
+        ('S', "Saturday"),
+        ('U', "Sunday")
+    )
+    date = models.CharField(max_length=1, choices=DATE_CHOICES)
+    time_start = models.TimeField()
+    time_end = models.TimeField()

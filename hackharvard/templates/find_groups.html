@@ -22,7 +22,7 @@
 				<tr>
 					<td>{{group.course.department}} {{group.course.number}}</td>
 					<td>
-						{% for member in group.members %}
+						{% for member in group.members.all %}
 							{{ member.first_name }} {{ member.last_name }},
 						{% endfor %}
 					</td>

@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from .models import Profile, Course, DateDuration
+from .models import Profile, Course, DateDuration, Group, DateDurationGroup
 
 
 class ProfileForm(ModelForm):
@@ -14,14 +14,24 @@ class ProfileForm(ModelForm):
 
 
 class DateDurationForm(forms.ModelForm):
-
-    time_start = forms.TimeField()
-
-    time_end = forms.TimeField()
-
     class Meta:
         model = DateDuration
-        fields = []
+        fields = ['date', 'time_start', 'time_end']
+
+
+class DateDurationGroupForm(forms.ModelForm):
+    class Meta:
+        model = DateDurationGroup
+        fields = ['date', 'time_start', 'time_end']
+
 
 class GroupForm(forms.ModelForm):
 
+    class Meta:
+        model = Group
+        fields = ['location', 'course']
+
+    def __init__(self, *args, **kwargs):
+        self.profile = kwargs.pop('profile', None)
+        super(GroupForm, self).__init__(*args, **kwargs)
+        self.fields['course'].queryset = self.profile.courses
