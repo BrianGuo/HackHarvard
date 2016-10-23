@@ -2,7 +2,7 @@ from django.shortcuts import render, render_to_response, redirect
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 from django.contrib import messages
-from .models import Profile, DateDuration, Group
+from .models import Profile, DateDuration, Group, Course
 from .forms import ProfileForm, DateDurationForm, GroupForm, DateDurationGroupForm
 from django.contrib.auth import get_user_model
 from django.forms import inlineformset_factory
@@ -29,6 +29,13 @@ def new_profile(request):
                     user = get_user_model().objects.get(id=int(request.user.id))
                     profile.user = user
                     profile.save()
+                    print(request.body)
+                    for course_pk in dict(request.POST)['courses']:
+                        course = Course.objects.get(id=course_pk)
+                        print(course)
+                        profile.courses.add(course)
+                        profile.save()
+                    print(profile.courses.all())
                     return redirect(reverse('studygroups:new_times'))
                 except IntegrityError:
                     form = ProfileForm()
@@ -40,6 +47,8 @@ def new_profile(request):
 
 
 def new_times(request):
+    if (request.user.profile.dateduration_set.first() is not None):
+        return redirect(reverse('studygroups:groups'))
     DateFormSet = inlineformset_factory(
         Profile, DateDuration, fields=('date', 'time_start', 'time_end'), form=DateDurationForm)
     profile = Profile.objects.get(user=get_user_model().objects.get(id=request.user.id))
@@ -71,7 +80,7 @@ def groups(request):
                     date.min, group.datedurationgroup.time_end) - datetime.combine(date.min, time.time_start)
             if timedelta.seconds >= 3600:
                 results.append(group)
-    return render(request, 'find_groups.html', {'groups': results})
+    return render(request, 'find_groups.html', {'groups': results, 'profile': profile})
 
 
 def view_profile(request):
@@ -93,7 +102,11 @@ def course(request, department, number):
     return render(request, 'course_page.html', {'groups': groups, 'department': department, 'number': number, 'title': title})
 
 def single_group(request, pk):
-    group = Group.objects.get(pk=pk)
+    group = Group.objects.get(id=pk)
+    profile = Profile.objects.get(user=request.user)
+    if(profile not in group.members.all()):
+        messages.error(request, "You're not a member of this group!")
+        return redirect(reverse("studygroups:groups"))
     return render(request, 'group.html', {'group': group})
 
 def create_group(request):
@@ -122,13 +135,24 @@ def create_group(request):
         return redirect(reverse('studygroups:new_group'))
     return render(request, 'group_create.html', {'groupform': groupform, 'meetingform': meeting_time_form})
 
+def request_group(request, pk):
+    profile = Profile.objects.get(user=request.user)
+    group = Group.objects.get(id=pk)
+    if request.method == 'POST':
+        if profile in group.invited.all():
+            messages.error("You have already requested to join this group")
+            return redirect(reverse('studygroups:groups'))
+        else:
+            group.invited.add(profile)
+    return redirect(reverse('studygroups:groups'))
+
 def respond_invite(request, group_pk):
     if request.method == 'POST':
         for pk, decision in request.POST.items():
-            user = get_user_model().objects.get(id=pk)
-            profile = Profile.objects.get(user=user)
-            group = Group.objects.get(id=group_pk)
             if decision == "Accept":
+                user = get_user_model().objects.get(id=pk)
+                profile = Profile.objects.get(user=user)
+                group = Group.objects.get(id=group_pk)
                 group.members.add(profile)
             group.invited.remove(profile)
     return redirect(reverse('studygroups:single_group', kwargs={'pk': group_pk}))

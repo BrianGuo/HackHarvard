@@ -1,4 +1,8 @@
 {% extends "base_no_image.html" %}
+{% block title %}
+Current Groups
+{% endblock %}
+
 {% block content %}
 
 <!-- <ul>
@@ -16,15 +20,18 @@
 	<table class="table">
 		<thead>
 			<tr>
+				<th>Group Name</th>
 				<th>Course</th>
 				<th>Members</th>
 				<th>Meeting Time</th>
 				<th>Location</th>
+				<th>Request to Join</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for group in groups %}
 				<tr>
+					<td><a href="/studygroups/groups/{{group.pk}}">{{group.name}}</a></td>
 					<td>{{group.course.department}} {{group.course.number}}</td>
 					<td>
 						{% for member in group.members.all %}
@@ -33,6 +40,18 @@
 					</td>
 					<td>{{group.datedurationgroup.time_start}} - {{group.datedurationgroup.time_end}}</td>
 					<td>{{group.location}}</td>
+					<td>
+					{% if profile in group.invited.all or profile in group.members.all %}
+						<button class='btn btn-primary-disabled'>
+							Join
+						</button></td>
+					{% else %}
+						<form action="/studygroups/groups/request/{{group.pk}}/" method="POST">
+						{% csrf_token %}
+						<button class='btn btn-primary' type='submit'>
+							Join
+						</button></form></td>
+					{% endif %}
 				</tr>
 			{% endfor %}
 		</tbody>
