@@ -38,7 +38,7 @@ Current Groups
 							{{ member.first_name }} {{ member.last_name }},
 						{% endfor %}
 					</td>
-					<td>{{group.datedurationgroup.time_start}}</td>
+					<td>{{group.datedurationgroup.time_start}} - {{group.datedurationgroup.time_end}}</td>
 					<td>{{group.location}}</td>
 					<td>
 					{% if profile in group.invited.all or profile in group.members.all %}
