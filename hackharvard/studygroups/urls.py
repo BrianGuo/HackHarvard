@@ -10,5 +10,7 @@ urlpatterns = [
     url(r'^groups/$', views.groups, name="groups"),
     url(r'^groups/(?P<pk>\d+)/$', views.single_group, name="single_group"),
     url(r'^courses/(?P<department>\w+)/(?P<number>\d+)/$', views.course, name="course"),
-    url(r'^groups/new/$', views.create_group, name="new_group")
+    url(r'^groups/new/$', views.create_group, name="new_group"),
+    url(r'^groups/request/(?P<pk>\d+)/$', views.request_group, name='request_group'),
+    url(r'^groups/join/(?P<group_pk>\d+)/$', views.respond_invite, name='join_group')
 ]

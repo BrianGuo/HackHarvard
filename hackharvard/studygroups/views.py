@@ -80,7 +80,7 @@ def groups(request):
                     date.min, group.datedurationgroup.time_end) - datetime.combine(date.min, time.time_start)
             if timedelta.seconds >= 3600:
                 results.append(group)
-    return render(request, 'find_groups.html', {'groups': results})
+    return render(request, 'find_groups.html', {'groups': results, 'profile': profile})
 
 
 def view_profile(request):
@@ -101,8 +101,12 @@ def course(request, department, number):
 
     return render(request, 'course_page.html', {'groups': groups, 'department': department, 'number': number, 'title': title})
 
-def single_group(request, id):
-    group = Group.objects.get(pk=id)
+def single_group(request, pk):
+    group = Group.objects.get(id=pk)
+    profile = Profile.objects.get(user=request.user)
+    if(profile not in group.members.all()):
+        messages.error(request, "You're not a member of this group!")
+        return redirect(reverse("studygroups:groups"))
     return render(request, 'group.html', {'group': group})
 
 def create_group(request):
@@ -131,13 +135,24 @@ def create_group(request):
         return redirect(reverse('studygroups:new_group'))
     return render(request, 'group_create.html', {'groupform': groupform, 'meetingform': meeting_time_form})
 
+def request_group(request, pk):
+    profile = Profile.objects.get(user=request.user)
+    group = Group.objects.get(id=pk)
+    if request.method == 'POST':
+        if profile in group.invited.all():
+            messages.error("You have already requested to join this group")
+            return redirect(reverse('studygroups:groups'))
+        else:
+            group.invited.add(profile)
+    return redirect(reverse('studygroups:groups'))
+
 def respond_invite(request, group_pk):
     if request.method == 'POST':
         for pk, decision in request.POST.items():
-            user = get_user_model().objects.get(id=pk)
-            profile = Profile.objects.get(user=user)
-            group = Group.objects.get(id=group_pk)
             if decision == "Accept":
+                user = get_user_model().objects.get(id=pk)
+                profile = Profile.objects.get(user=user)
+                group = Group.objects.get(id=group_pk)
                 group.members.add(profile)
             group.invited.remove(profile)
     return redirect(reverse('studygroups:single_group', kwargs={'pk': group_pk}))

@@ -5,6 +5,8 @@
     <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.5/css/bootstrap-flex.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.5/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.5/css/bootstrap-reboot.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.5/js/bootstrap.js"></script>
     <style>
         ul.menu {
             position: absolute;
@@ -47,12 +49,14 @@
     </ul>
 
     <div class="container">
+    <div class="row" style="text-align:center;">
+        <div class="col-md-8 offset-md-2" id="Title"><h3>{% block title %} {% endblock %}</h3> </div>
+    </div>
     {% if messages %}
         {% for message in messages %}
         <div class="row">
           <div class="col-md-6 col-md-offset-3">
             <div class="alert alert-{{message.tags}} alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <strong>{{ message }}</strong>
             </div>
           </div>

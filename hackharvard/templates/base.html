@@ -48,18 +48,17 @@
     <div class="row" style="text-align:center;">
         <div class="col-md-8 offset-md-2" id="Title"><h3>{% block title %} {% endblock %}</h3> </div>
     </div>
-    <!--{% if messages %}
+    {% if messages %}
         {% for message in messages %}
         <div class="row">
           <div class="col-md-6 col-md-offset-3">
             <div class="alert alert-{{message.tags}} alert-dismissible" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <strong>{{ message }}</strong>
             </div>
           </div>
         </div>
         {% endfor %}
-      {% endif %}-->
+      {% endif %}
     {% block content %} {% endblock %}
     </div>
 
