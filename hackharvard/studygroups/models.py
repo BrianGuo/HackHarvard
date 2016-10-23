@@ -24,6 +24,9 @@ class Profile(models.Model):
 
     bio = models.TextField()
 
+    def __str__(self):
+        return self.first_name + " " + self.last_name
+
 
 class DateDuration(models.Model):
     profile = models.ForeignKey(Profile)
