@@ -8,6 +8,7 @@ from django.contrib.auth import get_user_model
 from django.forms import inlineformset_factory
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
 from datetime import datetime, date
 # Create your views here.
@@ -45,6 +46,20 @@ def new_profile(request):
                 print("form not valid")
     return render(request, 'new_profile.html', {'form': form})
 
+@login_required(login_url="/")
+def edit_profile(request):
+    profile = request.user.profile
+    form = ProfileForm(instance=profile)
+    if request.method == "POST":
+        form = ProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.save()
+            return redirect(reverse('studygroups:view_profile'))
+    else:
+        form = ProfileForm(instance=profile)
+    return render(request, 'edit_profile.html', {'profile': form})
+
 
 def new_times(request):
     if (request.user.profile.dateduration_set.first() is not None):
@@ -62,6 +77,21 @@ def new_times(request):
         else:
             print(form.errors)
     return render(request, 'new_times.html', {'formset': formset})
+
+def edit_times(request):
+    DateFormSet = inlineformset_factory(
+        Profile, DateDuration, fields=('date', 'time_start', 'time_end'), form=DateDurationForm)
+    profile = Profile.objects.get(user=get_user_model().objects.get(id=request.user.id))
+    formset = DateFormSet(instance=profile)
+    if request.method == 'POST':
+        print(request.POST)
+        form = DateFormSet(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('studygroups:groups'))
+        else:
+            print(form.errors)
+    return render(request, 'edit_times.html', {'formset': formset})
 
 
 def groups(request):
