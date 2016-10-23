@@ -88,7 +88,7 @@ def create_group(request):
         meeting_time_form = DateDurationGroupForm(subdict)
         if meeting_time_form.is_valid():
             meeting_time = meeting_time_form.save(commit=False)
-            rest_dict = {'location': request.POST['location'], 'course': request.POST['course']}
+            rest_dict = {'location': request.POST['location'], 'course': request.POST['course'], 'name': request.POST['name']}
             groupform = GroupForm(rest_dict, profile=request.user.profile)
             if groupform.is_valid():
                 group = groupform.save(commit=False)
@@ -98,8 +98,19 @@ def create_group(request):
                 meeting_time.group = group
                 meeting_time.save()
                 return redirect(reverse('studygroups:groups'))
+            else:
+                print(groupform.errors)
+        else:
+            print(meeting_time_form.errors)
         return redirect(reverse('studygroups:new_group'))
     return render(request, 'group_create.html', {'groupform': groupform, 'meetingform': meeting_time_form})
 
-def accept_invite(request, ):
-
+def accept_invite(request, group_pk):
+    if request.method == 'POST':
+        for pk, decision in request.POST.items():
+            user = get_user_model().objects.get(id=pk)
+            profile = Profile.objects.get(user=user)
+            group = Group.objects.get(id=group_pk)
+            if decision == "Accept":
+                group.members.add(profile)
+                group.invited.remove(profile)
