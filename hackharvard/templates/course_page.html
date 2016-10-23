@@ -1,6 +1,10 @@
 {% extends "base_no_image.html" %}
 {% block content %}
-    <h1>{{ groups[0].course.department }} {{ groups[0].course.number }}: {{ groups[0].course.title }}</h1>
+    {% if department == "No" %}
+        <h1>{{ department }} {{ number }} {{ title }}</h1>
+    {% else %}
+        <h1>{{ department }} {{ number }}: {{ title }}</h1>
+    {% endif %}
     <div class="match-list">
         <table class="table">
             <thead>
