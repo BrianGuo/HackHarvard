@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<p>Times must be in 24-hour-format <strong>HH:MM:SS</strong></p>
 <form action="/studygroups/new_times/" method="post">
     {% csrf_token %}
     {{ formset.as_p }}

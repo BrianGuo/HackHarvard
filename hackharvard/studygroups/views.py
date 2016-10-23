@@ -19,6 +19,9 @@ def new_profile(request):
         return redirect(reverse('studygroups:new_times'))
     except ObjectDoesNotExist:
         form = ProfileForm()
+        if (Course.objects.all().count() == 0):
+            new_course = Course(department="Math", number=123, title="Algebra")
+            new_course.save()
         if request.method == 'POST':
             form = ProfileForm(request.POST)
             print(request.POST)
