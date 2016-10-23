@@ -47,6 +47,10 @@
         #groups-link{
             color: #FFFFFF;
         }
+
+        #logout-link{
+            color: #FFFFFF;
+        }
     </style>
 
     </head>
@@ -56,6 +60,7 @@
         {% if user %}
         <li><a href="/studygroups/groups/" id='groups-link'>Groups</a></li>
         <li><a href="/studygroups/profile/" id="profile-link">Profile</a></li>
+        <li><a href="/accounts/logout" id="logout-link">Logout</a></li>
         {% endif %}
     </ul>
 
