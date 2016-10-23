@@ -23,6 +23,7 @@
             float: right;
             display: inline;
             color: #ffffff;
+            padding-left: 20px;
             /* text-shadow: 2px 2px 4px #000; */
         }
 
@@ -42,6 +43,10 @@
         #profile-link{
             color: #FFFFFF;
         }
+
+        #groups-link{
+            color: #FFFFFF;
+        }
     </style>
 
     </head>
@@ -49,6 +54,7 @@
     <body>
     <ul class="menu">
         {% if user %}
+        <li><a href="/studygroups/groups/" id='groups-link'>Groups</a></li>
         <li><a href="/studygroups/profile/" id="profile-link">Profile</a></li>
         {% endif %}
     </ul>
