@@ -38,14 +38,19 @@
             margin-bottom: 50px;
             background-size: cover
         }
+
+        #profile-link{
+            color: #FFFFFF;
+        }
     </style>
 
     </head>
 
     <body>
     <ul class="menu">
-        <li> Test1 </li>
-        <li> Test2 </li>
+        {% if user %}
+        <li><a href="/studygroups/profile/" id="profile-link">Profile</a></li>
+        {% endif %}
     </ul>
 
     <div class="container">

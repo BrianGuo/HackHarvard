@@ -32,6 +32,10 @@
             margin-bottom: 50px;
             background-size: cover
         }
+
+        #profile-link{
+            color: #FFFFFF;
+        }
     </style>
 
     </head>
@@ -40,8 +44,9 @@
     <div id="headerImage">
     </div>
     <ul class="menu">
-        <li> Test1 </li>
-        <li> Test2 </li>
+        {% if request.user %}
+        <li><a href="/studygroups/profile/" id='profile-link'>Profile</a></li>
+        {% endif %}
     </ul>
 
     <div class="container">
