@@ -131,4 +131,4 @@ def respond_invite(request, group_pk):
             if decision == "Accept":
                 group.members.add(profile)
             group.invited.remove(profile)
-    return redirect(reverse('studygroups:single_group', kwargs={''})
+    return redirect(reverse('studygroups:single_group', kwargs={'pk': group_pk}))
