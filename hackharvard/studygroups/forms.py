@@ -6,7 +6,7 @@ from .models import Profile, Course, DateDuration, Group, DateDurationGroup
 
 class ProfileForm(ModelForm):
 
-    courses = forms.ModelMultipleChoiceField(queryset=Course.objects.all())
+    courses = forms.ModelMultipleChoiceField(queryset=Course.objects.all(), widget=forms.widgets.CheckboxSelectMultiple())
 
     class Meta:
         model = Profile

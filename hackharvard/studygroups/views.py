@@ -2,7 +2,7 @@ from django.shortcuts import render, render_to_response, redirect
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 from django.contrib import messages
-from .models import Profile, DateDuration, Group
+from .models import Profile, DateDuration, Group, Course
 from .forms import ProfileForm, DateDurationForm, GroupForm, DateDurationGroupForm
 from django.contrib.auth import get_user_model
 from django.forms import inlineformset_factory
@@ -29,6 +29,13 @@ def new_profile(request):
                     user = get_user_model().objects.get(id=int(request.user.id))
                     profile.user = user
                     profile.save()
+                    print(request.body)
+                    for course_pk in dict(request.POST)['courses']:
+                        course = Course.objects.get(id=course_pk)
+                        print(course)
+                        profile.courses.add(course)
+                        profile.save()
+                    print(profile.courses.all())
                     return redirect(reverse('studygroups:new_times'))
                 except IntegrityError:
                     form = ProfileForm()
@@ -40,6 +47,8 @@ def new_profile(request):
 
 
 def new_times(request):
+    if (request.user.profile.dateduration_set.first() is not None):
+        return redirect(reverse('studygroups:groups'))
     DateFormSet = inlineformset_factory(
         Profile, DateDuration, fields=('date', 'time_start', 'time_end'), form=DateDurationForm)
     profile = Profile.objects.get(user=get_user_model().objects.get(id=request.user.id))
