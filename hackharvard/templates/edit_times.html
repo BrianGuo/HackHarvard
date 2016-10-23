@@ -1,0 +1,8 @@
+{% extends "base_no_image.html" %}
+{% block content %}
+<form action="/studygroups/new_times/" method="post">
+    {% csrf_token %}
+    {{ formset.as_p }}
+    <input type="submit" class="btn btn-success" value="Submit" />
+</form>
+{% endblock %}

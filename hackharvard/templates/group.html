@@ -1,0 +1,61 @@
+{% extends "base_no_image.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="cols-md-4">
+    	<h1>{{ group.name }}</h1>
+    	<h2>{{ group.course.department}} {{group.course.number}}: {{group.course.title}}</h2>
+    	<h3>{{ group.datedurationgroup.get_date_display }} {{ group.datedurationgroup.time_start }} - {{ group.datedurationgroup.time_end }} | {{ group.location }}</h3>
+    	<br>
+    	<br>
+    </div>
+    <div class="cols-md-4 offset-md-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Invitation From</th>
+                    <th>Accept</th>
+                    <th>Reject</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for person in group.invited.all %}
+                <tr>
+                    <td>{{person.first_name}} {{person.last_name}} </td>
+                    <form action="/studygroups/groups/join/{{group.pk}}/" method="POST">
+                    {% csrf_token %}
+                    <td>
+                        <button type="submit" name="{{person.user.pk}}" value="Accept" class="btn btn-success btn-lg" aria-label="Left Align">
+                        </button>
+                    </td>
+                    <td>
+                        <button type="submit" name="{{person.user.pk}}" value="Reject" class="btn btn-danger btn-lg">
+                        </button>
+                    </td>
+                    </form>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="cols-md-7">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="meeting_notes">Meeting Notes</label>
+            <textarea class="form-control" rows="10"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="Pdf_upload">PDF</label>
+            <input type="file">
+            <p class="help-block">Upload your notes!</p>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

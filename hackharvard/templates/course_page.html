@@ -1,0 +1,32 @@
+{% extends "base_no_image.html" %}
+{% block content %}
+    {% if department == "No" %}
+        <h1>{{ department }} {{ number }} {{ title }}</h1>
+    {% else %}
+        <h1>{{ department }} {{ number }}: {{ title }}</h1>
+    {% endif %}
+    <div class="match-list">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Members</th>
+                    <th>Meeting Time</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for group in groups %}
+                    <tr>
+                        <td>
+                            {% for member in group.members.all %}
+                                {{ member.first_name }} {{ member.last_name }},
+                            {% endfor %}
+                        </td>
+                        <td>{{group.datedurationgroup.time_start}} - {{group.datedurationgroup.time_end}}</td>
+                        <td>{{group.location}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

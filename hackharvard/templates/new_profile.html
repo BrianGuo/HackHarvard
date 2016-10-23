@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="/studygroups/new_profile/" method="post">
+    {% csrf_token %}
+    <p>
+        <label for="{{ form.first_name.id_for_label"> First Name: </label>
+        {{form.first_name}}
+    </p>
+    <p>
+        <label for="{{ form.last_name.id_for_label"> Last Name: </label>
+        {{form.last_name}}
+    </p>
+    <p>
+        <label for="{{ form.resume_or_linkedin.id_for_label"> Resume or LinkedIn</label>
+        {{form.resume_or_linkedin}}
+    </p>
+    <p>
+        <label for="{{ form.bio.id_for_label"> Bio: </label> <br>
+        {{form.bio}}
+    </p>
+    {% for course in form.courses %}
+    <p>
+        {{course}}
+    </p>
+    {% endfor %}
+    <input type="submit" value="Submit" class="btn btn-success" />
+</form>
+
+{% endblock %}

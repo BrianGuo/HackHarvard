@@ -1,12 +1,13 @@
 import datetime
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils.timezone import now
 from django.dispatch import receiver
 from django.conf import settings
 
+from studygroups.forms import ProfileForm
+
 
 def home(request):
-    today = datetime.date.today()
-    return render(request, 'homepage.html',
-                  {'today': today, 'now': now()})
+    return render(request, 'homepage.html')
+
