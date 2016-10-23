@@ -78,7 +78,6 @@ def view_profile(request):
     profile = Profile.objects.get(user=get_user_model().objects.get(id=request.user.id))
     return render(request, 'profile.html', {'profile': profile})
 
-<<<<<<< HEAD
 def course(request, department, number):
     groups = Group.objects.filter(course__department=department).filter(course__number=number)
 
@@ -91,13 +90,11 @@ def course(request, department, number):
         number = "Groups"
         title = "Yet"
 
-    # groups = array(groups)
     return render(request, 'course_page.html', {'groups': groups, 'department': department, 'number': number, 'title': title})
 
 def single_group(request, id):
     group = Group.objects.get(pk=id)
     return render(request, 'group.html', {'group': group})
-=======
 
 def create_group(request):
     groupform = GroupForm(profile=request.user.profile)
@@ -123,4 +120,3 @@ def create_group(request):
 
 def accept_invite(request, ):
 
->>>>>>> da89fd7aca8acc7640a5e67b1d4dcf792ab7ea08
