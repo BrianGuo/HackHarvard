@@ -105,7 +105,7 @@ def create_group(request):
         return redirect(reverse('studygroups:new_group'))
     return render(request, 'group_create.html', {'groupform': groupform, 'meetingform': meeting_time_form})
 
-def accept_invite(request, group_pk):
+def respond_invite(request, group_pk):
     if request.method == 'POST':
         for pk, decision in request.POST.items():
             user = get_user_model().objects.get(id=pk)
@@ -113,4 +113,5 @@ def accept_invite(request, group_pk):
             group = Group.objects.get(id=group_pk)
             if decision == "Accept":
                 group.members.add(profile)
-                group.invited.remove(profile)
+            group.invited.remove(profile)
+    return redirect(reverse('studygroups:single_group', kwargs={''})
