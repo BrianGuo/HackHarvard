@@ -18,11 +18,11 @@
                 {% for group in groups %}
                     <tr>
                         <td>
-                            {% for member in group.members %}
+                            {% for member in group.members.all %}
                                 {{ member.first_name }} {{ member.last_name }},
                             {% endfor %}
                         </td>
-                        <td>{{group.meeting_time}}</td>
+                        <td>{{group.datedurationgroup.time_start}} - {{group.datedurationgroup.time_end}}</td>
                         <td>{{group.location}}</td>
                     </tr>
                 {% endfor %}

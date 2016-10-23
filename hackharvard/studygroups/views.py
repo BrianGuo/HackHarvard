@@ -92,8 +92,8 @@ def course(request, department, number):
 
     return render(request, 'course_page.html', {'groups': groups, 'department': department, 'number': number, 'title': title})
 
-def single_group(request, id):
-    group = Group.objects.get(pk=id)
+def single_group(request, pk):
+    group = Group.objects.get(pk=pk)
     return render(request, 'group.html', {'group': group})
 
 def create_group(request):
