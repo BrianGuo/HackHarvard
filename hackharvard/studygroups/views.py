@@ -91,9 +91,15 @@ def create_group(request):
             rest_dict = {'location': request.POST['location'], 'course': request.POST['course']}
             groupform = GroupForm(rest_dict, profile=request.user.profile)
             if groupform.is_valid():
-                group = groupform.save()
+                group = groupform.save(commit=False)
+                profile = Profile.objects.get(user=request.user)
+                group.save()
+                group.members.add(profile)
                 meeting_time.group = group
                 meeting_time.save()
                 return redirect(reverse('studygroups:groups'))
         return redirect(reverse('studygroups:new_group'))
     return render(request, 'group_create.html', {'groupform': groupform, 'meetingform': meeting_time_form})
+
+def accept_invite(request, ):
+

@@ -1,0 +1,28 @@
+{% extends "base_no_image.html" %}
+{% block content %}
+    <h1>{{ groups[0].course.department }} {{ groups[0].course.number }}: {{ groups[0].course.title }}</h1>
+    <div class="match-list">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Members</th>
+                    <th>Meeting Time</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for group in groups %}
+                    <tr>
+                        <td>
+                            {% for member in group.members %}
+                                {{ member.first_name }} {{ member.last_name }},
+                            {% endfor %}
+                        </td>
+                        <td>{{group.meeting_time}}</td>
+                        <td>{{group.location}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

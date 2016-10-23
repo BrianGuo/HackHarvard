@@ -6,6 +6,11 @@
 <li> match </li>
 {% endfor %}
 </ul> -->
+<div class="row">
+	<div class="col-md-4" style="margin-bottom:40px;">
+		<a href="/studygroups/groups/new"><button class="btn btn-success">Create New Group</button></a>
+	</div>
+</div>
 
 <div class="match-list">
 	<table class="table">
@@ -26,15 +31,15 @@
 							{{ member.first_name }} {{ member.last_name }},
 						{% endfor %}
 					</td>
-					<td>{{group.meeting_time}}</td>
+					<td>{{group.datedurationgroup.time_start}}</td>
 					<td>{{group.location}}</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 </div>
-
+<!--
 <form action="/studygroups/create_group" method="post">
 <input type="submit" class="btn btn-success" value="Create a new Group">
-</form>
+</form> -->
 {% endblock %}

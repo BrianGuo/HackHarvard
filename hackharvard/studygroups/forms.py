@@ -29,7 +29,7 @@ class GroupForm(forms.ModelForm):
 
     class Meta:
         model = Group
-        fields = ['location', 'course']
+        fields = ['location', 'course', 'name']
 
     def __init__(self, *args, **kwargs):
         self.profile = kwargs.pop('profile', None)

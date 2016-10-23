@@ -43,8 +43,10 @@ class DateDuration(models.Model):
 
 
 class Group(models.Model):
+    name = models.CharField(max_length=30)
     course = models.ForeignKey(Course)
-    members = models.ManyToManyField(Profile)
+    members = models.ManyToManyField(Profile, related_name="joined")
+    invited = models.ManyToManyField(Profile, related_name="invited_to")
     location = models.CharField(max_length=50)
 
 
