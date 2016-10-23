@@ -92,3 +92,7 @@ def course(request, department, number):
 
     # groups = array(groups)
     return render(request, 'course_page.html', {'groups': groups, 'department': department, 'number': number, 'title': title})
+
+def single_group(request, id):
+    group = Group.objects.get(pk=id)
+    return render(request, 'group.html', {'group': group})

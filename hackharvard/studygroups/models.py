@@ -50,6 +50,7 @@ class DateDuration(models.Model):
 class Group(models.Model):
     course = models.ForeignKey(Course)
     members = models.ManyToManyField(Profile)
+    name = models.CharField(max_length=30)
 
     meeting_time = models.OneToOneField(DateDuration)
     location = models.CharField(max_length=50)

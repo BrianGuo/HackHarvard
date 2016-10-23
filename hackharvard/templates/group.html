@@ -1,0 +1,8 @@
+{% extends "base_no_image.html" %}
+{% block content %}
+	<h1>{{ group.name }}</h1>
+	<h2>{{ group.course.department}} {{group.course.number}}: {{group.course.title}}</h2>
+	<h3>{{ group.meeting_time.date }} {{ group.meeting_time.time_start }} - {{ group.meeting_time.time_end }} | {{ group.location }}</h3>
+	<br>
+	<br>
+{% endblock %}
